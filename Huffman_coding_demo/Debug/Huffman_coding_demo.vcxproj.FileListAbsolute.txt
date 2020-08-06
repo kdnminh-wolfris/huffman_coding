@@ -1,2 +1,4 @@
 D:\repos\Huffman_coding_demo\Debug\Huffman_coding_demo.exe
 D:\repos\Huffman_coding_demo\Debug\Huffman_coding_demo.pdb
+D:\GitHub\huffman_coding\Huffman_coding_demo\Debug\Huffman_coding_demo.exe
+D:\GitHub\huffman_coding\Huffman_coding_demo\Debug\Huffman_coding_demo.pdb
