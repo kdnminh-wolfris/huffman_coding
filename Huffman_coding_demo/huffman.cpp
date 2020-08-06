@@ -6,12 +6,12 @@
 
 using namespace std;
 
-void FrequencyFinder::frequencyCounter(ifstream& f)
+void FrequencyFinder::frequencyCounter(ifstream& f) //NEDD # AT THE END OF FILE TO STOP
 {
 	char ch;
 	map<char, int>::iterator it;
 	f.get(ch);
-	while(ch != '#')
+	while(ch != '#') //stop with #
 	{
 		it = this->freTable.find(ch);
 		if (it == this->freTable.end()) this->freTable[ch] = 1;

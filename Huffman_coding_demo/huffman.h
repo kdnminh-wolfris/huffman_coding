@@ -18,6 +18,8 @@ class HuffmanTree {
 	private:
 		HuffmanNode* root;
 		HuffmanTree() : root(nullptr) {}
+
+		bool compress(ifstream& in, ofstream& ou);
 	public:
 		bool compress(char* text_file, char* compressed_file, char* encoded_table);
 		bool decompress(char* text_file, char* compressed_file, char* encoded_table);
