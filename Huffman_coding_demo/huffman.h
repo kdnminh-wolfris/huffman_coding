@@ -17,8 +17,8 @@ class HuffmanTree {
 		HuffmanNode* root;
 		HuffmanTree() : root(nullptr) {}
 	public:
-		HuffmanTree(char* txt);
-		void compress(char* txt);
+		bool compress(char* text_file, char* compressed_file, char* encoded_table);
+		bool decompress(char* text_file, char* compressed_file, char* encoded_table);
 };
 
 #endif
