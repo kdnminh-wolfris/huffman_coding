@@ -2,6 +2,8 @@
 #define HUFFMAN_H
 
 #include <iostream>
+#include <map>
+#include <string>
 
 using namespace std;
 
@@ -21,4 +23,13 @@ class HuffmanTree {
 		bool decompress(char* text_file, char* compressed_file, char* encoded_table);
 };
 
+
+class FrequencyFinder {
+private:
+	void frequencyCounter(ifstream& f);
+public:
+	map<char, int> freTable;
+	void show();
+	FrequencyFinder(string filename);
+};
 #endif
