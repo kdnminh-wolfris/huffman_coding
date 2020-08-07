@@ -3,15 +3,11 @@
 
 using namespace std;
 
-#define text_file "original.txt"
-#define compressed_file "compressed.dat"
-#define encoded_table "table.dat"
+#define text_file "text/original.txt"
+#define compressed_file "data/compressed.dat"
+#define encoded_table "data/table.dat"
 
 int main() {
-	FrequencyFinder ff(string("text.txt"));
-	ff.show();
-	return 1;
-
 	cout << "HUFFMAN CODING DEMONSTRATION\n\n";
 	cout << "Choose mode:\n";
 	cout << "(1) Compression\n";
@@ -21,5 +17,6 @@ int main() {
 
 	HuffmanTree sol;
 	if (t == 1) sol.compress(text_file, compressed_file, encoded_table);
-	//else sol.decompress(text_file, compressed_file, encoded_table);
+	else sol.decompress(text_file, compressed_file, encoded_table);
+	sol.print();
 }
