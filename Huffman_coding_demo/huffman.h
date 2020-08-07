@@ -17,20 +17,19 @@ class HuffmanNode {
 
 class HuffmanTree {
 	private:
-		HuffmanNode* root;
-		HuffmanTree() : root(nullptr) {}
-
-		void compress(ifstream &f, ofstream &txt); //test version
+		HuffmanNode* root = nullptr;
 
 		map <char, int> frequency;
+		map <char, string> encoded;
 
-		void to_tree();
+		void to_tree(map <char, int> table);
+		void fillEncodedTable(HuffmanNode* root, string code);
 
-		void print();
-		void __print(HuffmanNode* root, int level, int branch);
+		void __print(const string &prefix, HuffmanNode* root, bool is_left);
 	public:
-		bool compress(string text_file, string compressed_file, string encoded_table);
-		bool decompress(string text_file, string compressed_file, string encoded_table);
+		bool compress(string text_file, string compressed_file, string encoded_file);
+		bool decompress(string text_file, string compressed_file, string encoded_file);
+		void print();
 };
 
 

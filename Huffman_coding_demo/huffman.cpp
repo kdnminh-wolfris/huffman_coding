@@ -1,7 +1,8 @@
-#include "huffman.h"
+﻿#include "huffman.h"
 
-void HuffmanTree::to_tree() {
+void HuffmanTree::to_tree(map <char, int> table) {
 	priority_queue <pair <int, HuffmanNode *>> heap;
+	frequency = table;
 	for (auto x : frequency) {
 		HuffmanNode* tmp = new HuffmanNode(-int(x.first));;
 		heap.push({ -x.second, tmp });
@@ -18,59 +19,79 @@ void HuffmanTree::to_tree() {
 	heap.pop();
 }
 
-void HuffmanTree::print() {
-	__print(root, 0, 0);
+void HuffmanTree::fillEncodedTable(HuffmanNode* root, string code) {
+	if (root->val < 0)
+		encoded[char(-root->val)] = code;
+	else
+		fillEncodedTable(root->left, code + '0'),
+		fillEncodedTable(root->right, code + '1');
 }
 
-void HuffmanTree::__print(HuffmanNode* root, int level, int branch) {
-	if (level) {
-		for (int x = 3 * level; x--;)
-			cout << ' ';
-		cout << "|\n";
-		for (int x = 3 * level; x--;)
-			cout << ' ';
-		cout << "--- ";
-	}
+void HuffmanTree::print() {
+	__print("", root, false);
+}
+
+void HuffmanTree::__print(const string& prefix, HuffmanNode* root, bool is_left) {
+	cout << prefix;
+	cout << "|____";
+
 	if (root->val < 0) {
 		char c = -root->val;
 		cout << "Letter: " << c << " - Frequency: " << frequency[c] << '\n';
 	}
-	else cout << "Total frequency: " << root->val << '\n';
+	else
+		cout << "Total frequency: " << root->val << '\n',
+		__print(prefix + (is_left ? "|     " : "      "), root->left, true),
+		__print(prefix + (is_left ? "|     " : "      "), root->right, false);
 }
 
-bool HuffmanTree::compress(string text_file, string compressed_file, string encoded_table) {
-	return false;
-}
+bool HuffmanTree::compress(string text_file, string compressed_file, string encoded_file) {
+	ifstream fi;
+	fi.open(text_file);
 
-bool HuffmanTree::decompress(string text_file, string compressed_file, string encoded_table) {
-	return false;
-}
-
-void HuffmanTree::compress(ifstream &f, ofstream &txt)
-{
-	char ch;
-	f.get(ch);
-	while (ch != '#')
-	{
-		int a = this->frequency[ch];
-		txt << a;
-		f.get(ch);
+	if (!fi.is_open()) {
+		cout << "Error opening " << text_file << "\n";
+		return false;
 	}
-	return;
+
+	FrequencyFinder ff(text_file);
+	to_tree(ff.freTable);
+	fillEncodedTable(root, "");
+
+	ofstream fo;
+	fo.open(compressed_file);
+
+	char c;
+	while (EOF != (c = fi.get()))
+		fo << encoded[c];
+
+	fi.close();
+	fo.close();
+
+	fo.open(encoded_file);
+
+	for (auto x : encoded)
+		fo << x.first << ' ' << x.second << '\n';
+	
+	fo.close();
+	return true;
 }
 
-void FrequencyFinder::frequencyCounter(ifstream& f) //NEED # AT THE END OF FILE TO STOP
+bool HuffmanTree::decompress(string text_file, string compressed_file, string encoded_file) {
+	return false;
+}
+
+void FrequencyFinder::frequencyCounter(ifstream& f)
 {
-	char ch;
 	map<char, int>::iterator it;
-	f.get(ch);
-	while(ch != '#') //stop with #
+	char ch;
+	while(EOF != (ch = f.get()))
 	{
 		it = this->freTable.find(ch);
 		if (it == this->freTable.end()) this->freTable[ch] = 1;
 		else this->freTable[ch]++;
-		f.get(ch);
 	}
+
 	return;
 }
 
