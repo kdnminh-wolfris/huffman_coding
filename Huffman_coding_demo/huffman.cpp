@@ -6,7 +6,20 @@
 
 using namespace std;
 
-void FrequencyFinder::frequencyCounter(ifstream& f) //NEDD # AT THE END OF FILE TO STOP
+void HuffmanTree::compress(ifstream &f, ofstream &txt)
+{
+	char ch;
+	f.get(ch);
+	while (ch != '#')
+	{
+		int a = this->frequency[ch];
+		txt << a;
+		f.get(ch);
+	}
+	return;
+}
+
+void FrequencyFinder::frequencyCounter(ifstream& f) //NEED # AT THE END OF FILE TO STOP
 {
 	char ch;
 	map<char, int>::iterator it;

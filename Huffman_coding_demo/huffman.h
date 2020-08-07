@@ -19,7 +19,8 @@ class HuffmanTree {
 		HuffmanNode* root;
 		HuffmanTree() : root(nullptr) {}
 
-		bool compress(ifstream& in, ofstream& ou);
+		map<char, int> frequency;
+		void compress(ifstream &f, ofstream &txt); //test version
 	public:
 		bool compress(char* text_file, char* compressed_file, char* encoded_table);
 		bool decompress(char* text_file, char* compressed_file, char* encoded_table);
