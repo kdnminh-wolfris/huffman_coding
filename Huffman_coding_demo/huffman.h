@@ -2,8 +2,9 @@
 #define HUFFMAN_H
 
 #include <iostream>
+#include <fstream>
 #include <map>
-#include <string>
+#include <queue>
 
 using namespace std;
 
@@ -11,7 +12,7 @@ class HuffmanNode {
 	public:
 		int val;
 		HuffmanNode* left, * right;
-		HuffmanNode() : val(0), left(nullptr), right(nullptr) {}
+		HuffmanNode(int x) : val(x), left(nullptr), right(nullptr) {}
 };
 
 class HuffmanTree {
@@ -19,11 +20,17 @@ class HuffmanTree {
 		HuffmanNode* root;
 		HuffmanTree() : root(nullptr) {}
 
-		map<char, int> frequency;
 		void compress(ifstream &f, ofstream &txt); //test version
+
+		map <char, int> frequency;
+
+		void to_tree();
+
+		void print();
+		void __print(HuffmanNode* root, int level, int branch);
 	public:
-		bool compress(char* text_file, char* compressed_file, char* encoded_table);
-		bool decompress(char* text_file, char* compressed_file, char* encoded_table);
+		bool compress(string text_file, string compressed_file, string encoded_table);
+		bool decompress(string text_file, string compressed_file, string encoded_table);
 };
 
 
