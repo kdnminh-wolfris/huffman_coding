@@ -1,6 +1,6 @@
 ﻿#include "huffman.h"
 
-void HuffmanTree::to_tree(map <char, int> table) {
+void HuffmanTree::freq_to_tree(map <char, int> table) {
 	priority_queue <pair <int, HuffmanNode *>> heap;
 	frequency = table;
 	for (auto x : frequency) {
@@ -19,12 +19,12 @@ void HuffmanTree::to_tree(map <char, int> table) {
 	heap.pop();
 }
 
-void HuffmanTree::fillEncodedTable(HuffmanNode* root, string code) {
+void HuffmanTree::tree_to_table(HuffmanNode* root, string code) {
 	if (root->val < 0)
 		encoded[char(-root->val)] = code;
 	else
-		fillEncodedTable(root->left, code + '0'),
-		fillEncodedTable(root->right, code + '1');
+		tree_to_table(root->left, code + '0'),
+		tree_to_table(root->right, code + '1');
 }
 
 void HuffmanTree::print() {
@@ -55,8 +55,8 @@ bool HuffmanTree::compress(string text_file, string compressed_file, string enco
 	}
 
 	FrequencyFinder ff(text_file);
-	to_tree(ff.freTable);
-	fillEncodedTable(root, "");
+	freq_to_tree(ff.freTable);
+	tree_to_table(root, "");
 
 	ofstream fo;
 	fo.open(compressed_file);
