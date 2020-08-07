@@ -1,10 +1,17 @@
 #include "huffman.h"
+#include <string>
+
+using namespace std;
 
 #define text_file "original.txt"
 #define compressed_file "compressed.dat"
 #define encoded_table "table.dat"
 
 int main() {
+	FrequencyFinder ff(string("text.txt"));
+	ff.show();
+	return 1;
+
 	cout << "HUFFMAN CODING DEMONSTRATION\n\n";
 	cout << "Choose mode:\n";
 	cout << "(1) Compression\n";

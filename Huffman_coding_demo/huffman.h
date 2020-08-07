@@ -17,7 +17,10 @@ class HuffmanNode {
 
 class HuffmanTree {
 	private:
-		HuffmanNode* root = nullptr;
+		HuffmanNode* root;
+		HuffmanTree() : root(nullptr) {}
+
+		void compress(ifstream &f, ofstream &txt); //test version
 
 		map <char, int> frequency;
 
@@ -30,4 +33,13 @@ class HuffmanTree {
 		bool decompress(string text_file, string compressed_file, string encoded_table);
 };
 
+
+class FrequencyFinder {
+private:
+	void frequencyCounter(ifstream& f);
+public:
+	map<char, int> freTable;
+	void show();
+	FrequencyFinder(string filename);
+};
 #endif
