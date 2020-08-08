@@ -32,7 +32,7 @@ void HuffmanTree::print() {
 }
 
 void HuffmanTree::__print(const string& prefix, HuffmanNode* root, bool is_left) {
-	cout << prefix;
+	cout << prefix << "|\n" << prefix;
 	cout << "|____";
 
 	if (root->val < 0) {
@@ -78,7 +78,28 @@ bool HuffmanTree::compress(string text_file, string compressed_file, string enco
 }
 
 bool HuffmanTree::decompress(string text_file, string compressed_file, string encoded_file) {
-	return false;
+	ifstream fi;
+	fi.open(compressed_file);
+
+	if (!fi.is_open())
+		return false;
+
+	ofstream fo;
+	fo.open(text_file);
+
+	char c;
+	HuffmanNode* cur = root;
+	while (EOF != (c = fi.get())) {
+		if (c == '0') cur = cur->left;
+		else cur = cur->right;
+		if (cur->val < 0)
+			fo << char(-cur->val),
+			cur = root;
+	}
+
+	fi.close();
+	fo.close();
+	return true;
 }
 
 void FrequencyFinder::frequencyCounter(ifstream& f)

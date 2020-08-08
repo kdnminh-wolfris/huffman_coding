@@ -29,7 +29,7 @@ class HuffmanTree {
 		void __print(const string &prefix, HuffmanNode* root, bool is_left);
 	public:
 		bool compress(string text_file, string compressed_file, string encoded_file);
-		bool decompress(string text_file, string compressed_file, string encoded_file); // to-do
+		bool decompress(string text_file, string compressed_file, string encoded_file);
 		void print();
 };
 
