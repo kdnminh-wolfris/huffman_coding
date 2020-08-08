@@ -27,8 +27,77 @@ void HuffmanTree::tree_to_table(HuffmanNode* root, string code) {
 		tree_to_table(root->right, code + '1');
 }
 
+void HuffmanTree::table_to_tree(string table)
+{
+	ifstream f;
+	f.open(table);
+	if (!f.is_open())
+	{
+		cout << "Error loading the character table" << endl;
+		return;
+	}
+	if (this->encoded.size() != 0)
+	{
+		cout << "The encode table is not empty. Error!" << endl;
+		return;
+	}
+	else this->load_table(f, this->encoded);
+	f.close();
+
+	for (auto it : this->encoded)
+	{
+		char ch = it.first;
+		string code = it.second;
+		//BUILD TREE
+		if (!root) root = new HuffmanNode(0);
+		this->insertToTree(this->root, ch, code, 0);
+	}
+
+	return;
+}
+
+void HuffmanTree::load_table(ifstream& f, map<char, string>& encoded)
+{
+	char ch;
+	string code;
+	//LineFeed
+	while (EOF != (ch = f.get()))
+	{
+		f.get();
+		f >> code;
+		encoded[ch] = code;
+		ch = f.get();
+	}
+	return;
+}
+
+void HuffmanTree::insertToTree(HuffmanNode*& root, char ch, string code, int i)
+{
+	if (i == code.size())
+	{
+		root->val = -int(ch);
+		return;
+	}
+
+	if (code[i] == '0')
+	{
+		if (!root->left) root->left = new HuffmanNode(0);
+		this->insertToTree(root->left, ch, code, i + 1);
+	}
+	else if (code[i] == '1')
+	{
+		if (!root->right) root->right = new HuffmanNode(1);
+		this->insertToTree(root->right, ch, code, i + 1);
+	}
+	return;
+}
+
 void HuffmanTree::print() {
 	__print("", root, false);
+}
+
+void HuffmanTree::clear() {
+	remove(root);
 }
 
 void HuffmanTree::__print(const string& prefix, HuffmanNode* root, bool is_left) {
@@ -43,6 +112,14 @@ void HuffmanTree::__print(const string& prefix, HuffmanNode* root, bool is_left)
 		cout << "Total frequency: " << root->val << '\n',
 		__print(prefix + (is_left ? "|     " : "      "), root->left, true),
 		__print(prefix + (is_left ? "|     " : "      "), root->right, false);
+}
+
+void HuffmanTree::remove(HuffmanNode*& root) {
+	if (!root) return;
+	remove(root->left);
+	remove(root->right);
+	delete root;
+	root = nullptr;
 }
 
 bool HuffmanTree::compress(string text_file, string compressed_file, string encoded_file) {
@@ -83,6 +160,8 @@ bool HuffmanTree::decompress(string text_file, string compressed_file, string en
 
 	if (!fi.is_open())
 		return false;
+
+	table_to_tree(encoded_file);
 
 	ofstream fo;
 	fo.open(text_file);

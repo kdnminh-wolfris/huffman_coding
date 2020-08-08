@@ -23,14 +23,21 @@ class HuffmanTree {
 		map <char, string> encoded;
 
 		void freq_to_tree(map <char, int> table);
+		
 		void tree_to_table(HuffmanNode* root, string code);
-		void table_to_tree(); // to-do
+
+		void table_to_tree(string table);
+		void load_table(ifstream& f, map<char, string>& encoded);
+		void insertToTree(HuffmanNode*& root, char ch, string code, int i);
 
 		void __print(const string &prefix, HuffmanNode* root, bool is_left);
+
+		void remove(HuffmanNode*& root);
 	public:
 		bool compress(string text_file, string compressed_file, string encoded_file);
 		bool decompress(string text_file, string compressed_file, string encoded_file);
 		void print();
+		void clear();
 };
 
 

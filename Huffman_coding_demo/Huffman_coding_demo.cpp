@@ -27,4 +27,6 @@ int main() {
 
 	cout << "Huffman tree:\n";
 	sol.print();
+	
+	sol.clear();
 }
