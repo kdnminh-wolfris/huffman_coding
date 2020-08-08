@@ -3,7 +3,7 @@
 
 using namespace std;
 
-#define text_file "text/original.txt"
+#define text_file "text/text.txt"
 #define compressed_file "data/compressed.dat"
 #define encoded_table "data/table.dat"
 
@@ -19,4 +19,6 @@ int main() {
 	if (t == 1) sol.compress(text_file, compressed_file, encoded_table);
 	else sol.decompress(text_file, compressed_file, encoded_table);
 	sol.print();
+
+	return 1;
 }
