@@ -27,12 +27,5 @@ int main() {
 
 	cout << "Huffman tree:\n";
 	sol.print();
-<<<<<<< HEAD
-	
 	sol.clear();
-||||||| merged common ancestors
-=======
-
-	return 1;
->>>>>>> 6e15f436c281bfa9f850f2ab2e702038182dd183
 }
