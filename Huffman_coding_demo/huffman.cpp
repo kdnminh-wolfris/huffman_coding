@@ -27,6 +27,72 @@ void HuffmanTree::tree_to_table(HuffmanNode* root, string code) {
 		tree_to_table(root->right, code + '1');
 }
 
+void HuffmanTree::table_to_tree(string table)
+{
+	ifstream f;
+	f.open(table);
+	if (!f.is_open())
+	{
+		cout << "Error loading the character table" << endl;
+		return;
+	}
+	if (this->encoded.size() != 0)
+	{
+		cout << "The encode table is not empty. Error!" << endl;
+		return;
+	}
+	else this->load_table(f, this->encoded);
+
+	for (auto it : this->encoded)
+	{
+		char ch = it.first;
+		string code = it.second;
+		//BUILD TREE
+		this->insertToTree(this->root, ch, code, 0);
+	}
+
+	return;
+}
+
+void HuffmanTree::load_table(ifstream& f, map<char, string> &encoded)
+{
+	char ch;
+	string code;
+	//LineFeed
+	while (EOF != (ch = f.get()))
+	{
+		f.get();
+		f >> code;
+		encoded[ch] = code;
+		ch = f.get();
+	}
+
+	for (auto it : encoded)
+		cout << it.first << " " << it.second << endl;
+	return;
+}
+
+void HuffmanTree::insertToTree(HuffmanNode*& root, char ch, string code, int i)
+{
+	if (i == code.size())
+	{
+		root->val = -int(ch);
+		return;
+	}
+	
+	if (code[i] == '0')
+	{
+		root->left = new HuffmanNode(0);
+		this->insertToTree(root->left, ch, code, i + 1);
+	}
+	else if (code[i] == '1')
+	{
+		root->right = new HuffmanNode(1);
+		this->insertToTree(root->right, ch, code, i + 1);
+	}
+	return;
+}
+
 void HuffmanTree::print() {
 	__print("", root, false);
 }
